@@ -39,6 +39,13 @@ const startMysql = async ({util, answers, username, docker}) => {
     deploymentName,
     hostname: deploymentName,
     restartPolicy: 'always',
+    Mounts: [
+      {
+        Type: 'volume',
+        Source: `${answers.projectName}-mysqldata`,
+        Target: '/var/lib/mysql',
+      },
+    ],
     Env: [`MYSQL_ROOT_PASSWORD=${answers.mysqlPassword}`],
   });
 };
