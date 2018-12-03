@@ -92,6 +92,19 @@ exports.runSetup = async ({answers, serverConfig, username, docker, util}) => {
 
   try {
     util.logger.debug('starting work..');
+    if (serverConfig.swarm) {
+      util.logger.debug('pulling mysql..');
+      await docker.pullImage(mysqlImage);
+
+      util.logger.debug('pulling wordpress..');
+      await docker.pullImage(wordpressImage);
+
+      if (answers.phpmyadminStart) {
+        util.logger.debug('pulling phpmyadmin..');
+        await docker.pullImage(phpmyadminImage);
+      }
+    }
+
     // start mysql container
     util.logger.debug('starting mysql..');
     const mysql = await startMysql({util, answers, username, docker});
