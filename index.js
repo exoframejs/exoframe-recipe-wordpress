@@ -92,7 +92,7 @@ exports.runSetup = async ({answers, serverConfig, username, docker, util}) => {
 
   try {
     util.logger.debug('starting work..');
-    if (serverConfig.swarm) {
+    if (!serverConfig.swarm) {
       util.logger.debug('pulling mysql..');
       await docker.pullImage(mysqlImage);
 
